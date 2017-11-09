@@ -1,0 +1,29 @@
+DROP table hotel cascade constraints;
+DROP table room_details cascade constraints;
+
+
+CREATE TABLE hotel(
+	hotel_id NUMBER(4) PRIMARY KEY,
+	city VARCHAR2(10),
+	hotel_name VARCHAR2(20),
+	address VARCHAR2(50),
+	description VARCHAR2(50),
+	avg_rate_per_night NUMBER(8,2),
+	phone_no1 VARCHAR2(10),
+	phone_no2 VARCHAR2(10),
+	rating NUMBER(1),
+	email VARCHAR2(15),
+	fax VARCHAR2(15)
+);
+
+
+CREATE TABLE room_details(
+	room_id NUMBER(4) PRIMARY KEY,
+	hotel_id NUMBER(4),
+	room_no VARCHAR(4),
+	room_type VARCHAR2(20) CHECK(room_type in('Standard non A/C room','Standard A/C room','Executive A/C room','Deluxe A/C room')),
+	per_night_rate NUMBER(8,2),
+	availability VARCHAR(4) CHECK(availability IN ('YES','NO')),
+	FOREIGN KEY(hotel_id) REFERENCES hotel(hotel_id) on delete cascade
+	);
+	

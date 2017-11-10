@@ -1,5 +1,8 @@
 DROP table hotel cascade constraints;
 DROP table room_details cascade constraints;
+DROP table booking_details cascade constraints;
+DROP table user_details cascade constraints;
+DROP table hotel_teaser;
 
 
 CREATE TABLE hotel(
@@ -26,4 +29,37 @@ CREATE TABLE room_details(
 	availability VARCHAR(4) CHECK(availability IN ('YES','NO')),
 	FOREIGN KEY(hotel_id) REFERENCES hotel(hotel_id) on delete cascade
 	);
+
+CREATE TABLE user_details(
+	user_id NUMBER(4)PRIMARY KEY,
+	password VARCHAR2(15),
+	role VARCHAR2(10),
+	user_name VARCHAR2(30),
+	mobile_no VARCHAR2(10),
+	phone VARCHAR2(10),
+	address VARCHAR2(100),
+	email VARCHAR2(50)
+);
 	
+CREATE TABLE booking_details(
+	booking_id NUMBER(4) PRIMARY KEY,
+	hotel_id NUMBER(4),
+	room_id NUMBER(4), 
+	user_id NUMBER(4),
+	booked_from DATE,
+	booked_to DATE,
+	no_of_adults NUMBER(2), 
+	no_of_children NUMBER(2),
+	amount NUMBER(8,2),
+	FOREIGN KEY(room_id) REFERENCES room_details(room_id) ON DELETE CASCADE,
+	FOREIGN KEY(user_id) REFERENCES user_details(user_id) ON DELETE CASCADE,
+	FOREIGN KEY(hotel_id) REFERENCES hotel(hotel_id) ON DELETE CASCADE
+);
+
+
+
+CREATE TABLE hotel_teaser(
+	comm VARCHAR2(50)
+);
+
+commit;
